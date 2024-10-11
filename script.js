@@ -1,6 +1,12 @@
+let skip = 0;
+let limit = 10;
+let loading = false;
+
 const getPosts = async () => {
 	try {
-		const response = await fetch("https://dummyjson.com/posts?limit=10");
+		const response = await fetch(
+			`https://dummyjson.com/posts?limit=${limit}&skip=${skip}`
+		);
 		const result = await response.json();
 
 		return result;
@@ -10,10 +16,16 @@ const getPosts = async () => {
 };
 
 const displayPosts = async () => {
+	if (loading) {
+		return;
+	}
+
+	loading = true;
+
 	const posts = await getPosts();
 	console.log(posts.posts);
 
-	if (posts) {
+	if (posts && posts.posts.length > 0) {
 		const list = document.getElementById("list");
 		posts.posts.forEach((post) => {
 			const postElement = document.createElement("div");
@@ -23,7 +35,14 @@ const displayPosts = async () => {
 			postElement.id = post.id;
 			list.appendChild(postElement);
 		});
+
+		skip += limit;
+	} else {
+		console.log("No more posts to load.");
+		observer.disconnect();
 	}
+
+	loading = false;
 };
 
 displayPosts();
@@ -34,6 +53,15 @@ const options = {
 	threshold: 0.7,
 };
 
-const callbackfn = () => {};
+const callbackfn = async (entries, observer) => {
+	entries.forEach((entry) => {
+		if (entry.isIntersecting && !loading) {
+			displayPosts();
+		}
+	});
+};
+
+const target = document.getElementById("target");
 
 const observer = new IntersectionObserver(callbackfn, options);
+observer.observe(target);
