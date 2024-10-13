@@ -6,48 +6,30 @@ let previousElement = -1;
 
 let dots = Array(size);
 
-// Changes Index as per the time given.
-const handleIndexChange = (item, dots, size, time) => {
-	let previousElement = -1;
-	setInterval(() => {
-		dots.children[currentIndex].classList.add("white-dot");
-		item.innerHTML = `${images[currentIndex]}`;
-		currentIndex = (currentIndex + 1) % size;
-
-		// do nothing about
-		if (previousElement === -1) {
-			previousElement = 0;
-			return;
-		} else if (previousElement === 0) {
-			previousElement = size - 1;
-		} else {
-			previousElement = currentIndex - 1;
-		}
-
-		dots.children[previousElement].classList.remove("white-dot");
-	}, time);
-};
-
-const updateChangeOfIndex = (item, dots) => {
+const updateCarousel = (item, dots, index) => {
+	// A bit of fix required here
 	if (previousElement === -1) {
 		previousElement = currentIndex;
-		dots.children[currentIndex].classList.add("white-dot");
-		item.innerHTML = `${images[currentIndex]}`;
-
-		return;
+	} else {
+		previousElement = currentIndex;
 	}
 
-	// Store the last element
-	previousElement = currentIndex;
-
-	// Update the current Index
-	currentIndex = (currentIndex + 1) % size;
-
-	// Add the class to the new child
+	// updating the current index
+	currentIndex = index;
 	dots.children[currentIndex].classList.add("white-dot");
 	item.innerHTML = `${images[currentIndex]}`;
 
-	dots.children[previousElement].classList.remove("white-dot");
+	// Remove the highlight from the previous dot
+	if (previousElement !== -1) {
+		dots.children[previousElement].classList.remove("white-dot");
+	}
+};
+
+const handleIndexChange = (item, dots) => {
+	setInterval(() => {
+		const nextIndex = (currentIndex + 1) % size;
+		updateCarousel(item, dots, nextIndex);
+	}, timeDelay);
 };
 
 const init = () => {
@@ -59,13 +41,18 @@ const init = () => {
 		dot.classList.add("dot");
 		dot.id = `dot-${i}`;
 		dots.appendChild(dot);
+
+		// Add event listeners to jump to the index
+		dot.addEventListener("click", () => {
+			updateCarousel(item, dots, i);
+		});
 	}
 
 	// Run the function immediately
-	updateChangeOfIndex(item, dots);
+	updateCarousel(item, dots, currentIndex);
 
-	// Then run after every interval
-	setInterval(updateChangeOfIndex, timeDelay, item, dots);
+	// Start the automatic sliding
+	handleIndexChange(item, dots);
 };
 
 init();
