@@ -31,3 +31,22 @@ p {
 	border-radius: 20px;
 	background-color: blanchedalmond;
 }
+
+.dots {
+	margin: 20px auto 0px auto;
+	width: fit-content;
+}
+
+.dot {
+	width: 10px;
+	height: 10px;
+	padding: 2px;
+	margin: 0 10px;
+	border-radius: 50%;
+	background-color: black;
+	display: inline-block;
+}
+
+.white-dot {
+	background-color: white;
+}
