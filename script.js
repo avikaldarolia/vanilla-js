@@ -8,9 +8,7 @@ let dots = Array(size);
 
 const updateCarousel = (item, dots, index) => {
 	// A bit of fix required here
-	if (previousElement === -1) {
-		previousElement = currentIndex;
-	} else {
+	if (previousElement !== -1) {
 		previousElement = currentIndex;
 	}
 
@@ -22,6 +20,8 @@ const updateCarousel = (item, dots, index) => {
 	// Remove the highlight from the previous dot
 	if (previousElement !== -1) {
 		dots.children[previousElement].classList.remove("white-dot");
+	} else {
+		previousElement = currentIndex;
 	}
 };
 
