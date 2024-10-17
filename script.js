@@ -5,7 +5,15 @@ let size = 4;
 let previousElement = -1;
 let interval;
 
-let dots = Array(size);
+const fetchImages = async () => {
+	console.log("check");
+
+	for (let i = 0; i < size; i++) {
+		const res = await fetch(`https://picsum.photos/200/300?random=${i}`);
+		const img = res.url;
+		images.push(img);
+	}
+};
 
 const updateCarousel = (item, dots, index) => {
 	if (previousElement !== -1) {
@@ -15,7 +23,8 @@ const updateCarousel = (item, dots, index) => {
 	// updating the current index
 	currentIndex = index;
 	dots.children[currentIndex].classList.add("white-dot");
-	item.innerHTML = `${images[currentIndex]}`;
+	item.textContent = images[currentIndex];
+	// item.style.backgroundImage = `url(${images[currentIndex]})`;
 
 	// Remove the highlight from the previous dot
 	if (previousElement !== -1) {
@@ -34,16 +43,17 @@ const handleIndexChange = (item, dots) => {
 	}, timeDelay);
 };
 
-const init = () => {
+const init = async () => {
 	const item = document.getElementById("carousel-item");
-
 	const dots = document.getElementById("dots");
+
+	// await fetchImages();
+
 	for (let i = 0; i < size; i++) {
 		const dot = document.createElement("span");
 		dot.classList.add("dot");
 		dot.id = `dot-${i}`;
 		dots.appendChild(dot);
-
 		// Add event listeners to jump to the index
 		dot.addEventListener("click", () => {
 			updateCarousel(item, dots, i);
@@ -64,13 +74,17 @@ const init = () => {
 	const prevButton = document.getElementById("prev-btn");
 
 	nextButton.addEventListener("click", () => {
+		clearInterval(interval);
 		const nextIndex = (currentIndex + 1) % size;
 		updateCarousel(item, dots, nextIndex);
+		handleIndexChange(item, dots);
 	});
 
 	prevButton.addEventListener("click", () => {
+		clearInterval(interval);
 		const prevIndex = (currentIndex - 1 + size) % size;
 		updateCarousel(item, dots, prevIndex);
+		handleIndexChange(item, dots);
 	});
 
 	// Run the function immediately
