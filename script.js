@@ -50,6 +50,16 @@ const init = () => {
 		});
 	}
 
+	// Pause on Hover
+	item.addEventListener("mouseenter", () => {
+		clearInterval(interval);
+	});
+
+	// Restart when mouse leaves
+	item.addEventListener("mouseleave", () => {
+		handleIndexChange(item, dots);
+	});
+
 	const nextButton = document.getElementById("next-btn");
 	const prevButton = document.getElementById("prev-btn");
 
