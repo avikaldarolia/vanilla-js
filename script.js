@@ -3,11 +3,11 @@ let currentIndex = 0;
 let timeDelay = 3000;
 let size = 4;
 let previousElement = -1;
+let interval;
 
 let dots = Array(size);
 
 const updateCarousel = (item, dots, index) => {
-	// A bit of fix required here
 	if (previousElement !== -1) {
 		previousElement = currentIndex;
 	}
@@ -26,7 +26,9 @@ const updateCarousel = (item, dots, index) => {
 };
 
 const handleIndexChange = (item, dots) => {
-	setInterval(() => {
+	clearInterval(interval);
+
+	interval = setInterval(() => {
 		const nextIndex = (currentIndex + 1) % size;
 		updateCarousel(item, dots, nextIndex);
 	}, timeDelay);
@@ -47,6 +49,19 @@ const init = () => {
 			updateCarousel(item, dots, i);
 		});
 	}
+
+	const nextButton = document.getElementById("next-btn");
+	const prevButton = document.getElementById("prev-btn");
+
+	nextButton.addEventListener("click", () => {
+		const nextIndex = (currentIndex + 1) % size;
+		updateCarousel(item, dots, nextIndex);
+	});
+
+	prevButton.addEventListener("click", () => {
+		const prevIndex = (currentIndex - 1 + size) % size;
+		updateCarousel(item, dots, prevIndex);
+	});
 
 	// Run the function immediately
 	updateCarousel(item, dots, currentIndex);

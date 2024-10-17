@@ -32,6 +32,11 @@ p {
 	background-color: blanchedalmond;
 }
 
+.carousel-btn {
+	padding: 4px;
+	margin: 0 20px;
+}
+
 .dots {
 	margin: 20px auto 0px auto;
 	width: fit-content;
