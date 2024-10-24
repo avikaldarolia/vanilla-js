@@ -10,18 +10,23 @@
 	<body>
 		<h1>Kanban Board</h1>
 		<div class="input-container">
-			<input class="task-input" type="text" name="" id="" />
-			<button class="add-task">Add Task</button>
+			<input
+				class="task-input"
+				type="text"
+				name="task-input"
+				value=""
+				id="task-input" />
+			<button onclick="addtask()" class="add-task">Add Task</button>
 		</div>
 
 		<div class="board-container">
-			<div class="row">
+			<div class="row" ondragover="allowDrop(event)" ondrop="drop(event)">
 				<p class="row-header">Backlog</p>
 			</div>
-			<div class="row">
+			<div class="row" ondragover="allowDrop(event)" ondrop="drop(event)">
 				<p class="row-header">In Progress</p>
 			</div>
-			<div class="row">
+			<div class="row" ondragover="allowDrop(event)" ondrop="drop(event)">
 				<p class="row-header">Completed</p>
 			</div>
 		</div>
