@@ -3,9 +3,85 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>TO-DO list</title>
+		<title>To-Do list</title>
 	</head>
-	<style></style>
-	<body></body>
-	<script></script>
+	<style>
+		.body-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			width: 70vw;
+			background-color: lightgrey;
+			margin: 10px auto;
+		}
+		.list-container {
+			width: 100%;
+		}
+		.list-item {
+			display: flex;
+			justify-content: space-between;
+			width: 60%;
+			margin: 2px auto;
+			padding: 5px;
+			background-color: white;
+		}
+
+		.input-container {
+			display: flex;
+		}
+	</style>
+	<body>
+		<div class="body-container">
+			<div class="input-container">
+				<input type="text" name="" id="todo-input" />
+				<button class="add-btn" type="submit" id="enter-button">Add</button>
+			</div>
+			<div id="list-container" class="list-container"></div>
+		</div>
+	</body>
+	<script>
+        
+		const createListItem = (todoItem) => {
+			const elem = document.createElement("div");
+			elem.classList.add("list-item");
+			elem.id = Date.now();
+			const statusButton = document.createElement("button");
+			statusButton.textContent = "Done";
+			const todoInput = document.createElement("p");
+			todoInput.textContent = todoItem;
+			const deleteButton = document.createElement("button");
+			deleteButton.textContent = "Delete";
+			elem.appendChild(statusButton);
+			elem.appendChild(todoInput);
+			elem.appendChild(deleteButton);
+			return elem;
+		};
+
+		const handleInputSubmit = (e) => {
+			e.preventDefault();
+			console.log("here");
+			const todoValue = input.value.trim();
+			console.log(todoValue);
+			if (todoValue === "") {
+				console.log("here2");
+				return;
+			}
+
+			const listContainer = document.getElementById("list-container");
+			const listElement = createListItem(todoValue);
+			listContainer.appendChild(listElement);
+		};
+
+		const handleKeyStroke = (e) => {
+			if (e.key == "Enter") {
+				handleInputSubmit(e);
+			}
+		};
+
+		const input = document.getElementById("todo-input");
+		input.addEventListener("keydown", handleKeyStroke);
+		const add_button = document.getElementById("enter-button");
+		add_button.addEventListener("click", handleInputSubmit);
+	</script>
 </html>
