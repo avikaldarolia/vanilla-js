@@ -6,15 +6,7 @@
 		<title>To-Do list</title>
 	</head>
 	<style>
-		.body-container {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			width: 70vw;
-			background-color: lightgrey;
-			margin: 10px auto;
-		}
+		/* 
 		.list-container {
 			width: 100%;
 		}
@@ -27,12 +19,118 @@
 			background-color: white;
 		}
 
+*/
+		body {
+			background-color: #28282b;
+			color: #f0f0f5;
+			/* font-family: Arial, sans-serif; */
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+
+		button {
+			padding: 0.5rem 1rem;
+			cursor: pointer;
+			background-color: #4f8ef7;
+			color: white;
+			font-weight: 600;
+			border: none;
+			border-radius: 5px;
+			transition: background-color 0.2s ease;
+			margin: 0 5px;
+			font-size: 1rem;
+		}
+
+		button:hover {
+			background-color: #416bb5;
+		}
+
+		button:active {
+			transform: scale(0.95);
+		}
+
+		.body-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 50vw;
+			background-color: #3b3b47;
+			margin: auto;
+			padding: 2rem;
+			border-radius: 15px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+		}
+
+		h1 {
+			color: #f0f0f5;
+			margin-bottom: 1rem;
+			font-size: 2rem;
+			font-weight: 700;
+		}
+
 		.input-container {
 			display: flex;
+			width: 100%;
+			justify-content: space-between;
+			margin-bottom: 1rem;
+		}
+
+		input[type="text"] {
+			width: 100%;
+			padding: 0.5rem 1rem;
+			border-radius: 5px;
+			border: 1px solid #4f8ef7;
+			margin-right: 0.5rem;
+			font-size: 1rem;
+		}
+
+		input:focus {
+			outline: none;
+			border-color: #416bb5;
+		}
+
+		.list-container {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.list-item {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0.8rem 1rem;
+			background-color: #f8f9fa;
+			color: #333;
+			border-radius: 5px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			transition: background-color 0.2s ease;
+		}
+
+		.list-item:hover {
+			background-color: #e9ecef;
+		}
+
+		.list-item p {
+			margin: 0;
+			font-size: 1rem;
+			flex-grow: 1;
+			padding: 0 1rem;
+		}
+
+		.strike {
+			text-decoration: line-through;
+			color: #6c757d;
 		}
 	</style>
 	<body>
 		<div class="body-container">
+			<h1>To-Do List</h1>
 			<div class="input-container">
 				<input type="text" name="" id="todo-input" />
 				<button class="add-btn" type="submit" id="enter-button">Add</button>
@@ -41,17 +139,36 @@
 		</div>
 	</body>
 	<script>
-        
+		const handleDeleteClick = (e) => {
+			if (e.target.parentNode) {
+				e.target.parentNode.remove(e.target.value);
+			}
+		};
+
+		const handleStatusClick = (e) => {
+			const btnStatus = e.target.innerText;
+			const todoValue = e.target.nextSibling;
+			if (btnStatus === "Done") {
+				e.target.innerText = "Undo";
+				todoValue.classList.add("strike");
+			} else {
+				e.target.innerText = "Done";
+				todoValue.classList.remove("strike");
+			}
+		};
+
 		const createListItem = (todoItem) => {
 			const elem = document.createElement("div");
 			elem.classList.add("list-item");
 			elem.id = Date.now();
 			const statusButton = document.createElement("button");
 			statusButton.textContent = "Done";
+			statusButton.addEventListener("click", handleStatusClick);
 			const todoInput = document.createElement("p");
 			todoInput.textContent = todoItem;
 			const deleteButton = document.createElement("button");
 			deleteButton.textContent = "Delete";
+			deleteButton.addEventListener("click", handleDeleteClick);
 			elem.appendChild(statusButton);
 			elem.appendChild(todoInput);
 			elem.appendChild(deleteButton);
@@ -68,7 +185,6 @@
 				return;
 			}
 
-			const listContainer = document.getElementById("list-container");
 			const listElement = createListItem(todoValue);
 			listContainer.appendChild(listElement);
 		};
@@ -83,5 +199,6 @@
 		input.addEventListener("keydown", handleKeyStroke);
 		const add_button = document.getElementById("enter-button");
 		add_button.addEventListener("click", handleInputSubmit);
+		const listContainer = document.getElementById("list-container");
 	</script>
 </html>
