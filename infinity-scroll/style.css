@@ -1,0 +1,35 @@
+body {
+	width: 70vw;
+	margin: 0 auto;
+}
+
+p {
+	margin: 0;
+}
+
+.heading {
+	text-align: center;
+	padding-top: 40px;
+	font-size: 40px;
+}
+
+.list {
+	padding: 20px 0;
+}
+
+.post {
+	padding: 20px 30px;
+	border: 2px solid lightgrey;
+	box-shadow: darkgrey;
+	border-radius: 15px;
+	margin: 10px 0px;
+}
+
+.post-title {
+	font-size: 20px;
+	color: crimson;
+}
+
+.post-body {
+	padding: 5px 0px;
+}
