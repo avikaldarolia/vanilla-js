@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Kanban Board</title>
+		<meta name="description" content="Basic implementation of a Kanban Board" />
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<h1>Kanban Board</h1>
+		<div class="input-container">
+			<input
+				class="task-input"
+				type="text"
+				name="task-input"
+				value=""
+				id="task-input" />
+			<button onclick="addtask()" class="add-task">Add Task</button>
+		</div>
+
+		<div class="board-container">
+			<div class="row" ondragover="allowDrop(event)" ondrop="drop(event)">
+				<p class="row-header">Backlog</p>
+			</div>
+			<div class="row" ondragover="allowDrop(event)" ondrop="drop(event)">
+				<p class="row-header">In Progress</p>
+			</div>
+			<div class="row" ondragover="allowDrop(event)" ondrop="drop(event)">
+				<p class="row-header">Completed</p>
+			</div>
+		</div>
+	</body>
+
+	<script src="./script.js" type="text/javascript"></script>
+</html>
