@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>To-Do list</title>
+	</head>
+	<style>
+		body {
+			background-color: #28282b;
+			color: #f0f0f5;
+			/* font-family: Arial, sans-serif; */
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+
+		button {
+			padding: 0.5rem 1rem;
+			cursor: pointer;
+			background-color: #4f8ef7;
+			color: white;
+			font-weight: 600;
+			border: none;
+			border-radius: 5px;
+			transition: background-color 0.2s ease;
+			margin: 0 5px;
+			font-size: 1rem;
+		}
+
+		button:hover {
+			background-color: #416bb5;
+		}
+
+		button:active {
+			transform: scale(0.95);
+		}
+
+		.body-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 50vw;
+			background-color: #3b3b47;
+			margin: auto;
+			padding: 2rem;
+			border-radius: 15px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+		}
+
+		h1 {
+			color: #f0f0f5;
+			margin-bottom: 1rem;
+			font-size: 2rem;
+			font-weight: 700;
+		}
+
+		.input-container {
+			display: flex;
+			width: 100%;
+			justify-content: space-between;
+			margin-bottom: 1rem;
+		}
+
+		input[type="text"] {
+			width: 100%;
+			padding: 0.5rem 1rem;
+			border-radius: 5px;
+			border: 1px solid #4f8ef7;
+			margin-right: 0.5rem;
+			font-size: 1rem;
+		}
+
+		input:focus {
+			outline: none;
+			border-color: #416bb5;
+		}
+
+		.list-container {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+
+		.list-item {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0.8rem 1rem;
+			background-color: #f8f9fa;
+			color: #333;
+			border-radius: 5px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			transition: background-color 0.2s ease;
+		}
+
+		.list-item:hover {
+			background-color: #e9ecef;
+		}
+
+		.list-item p {
+			margin: 0;
+			font-size: 1rem;
+			flex-grow: 1;
+			padding: 0 1rem;
+		}
+
+		.strike {
+			text-decoration: line-through;
+			color: #6c757d;
+		}
+	</style>
+	<body>
+		<div class="body-container">
+			<h1>To-Do List</h1>
+			<div class="input-container">
+				<input type="text" name="" id="todo-input" placeholder="Enter a task" />
+				<button id="enter-button">Add</button>
+			</div>
+			<div id="list-container" class="list-container"></div>
+		</div>
+	</body>
+
+	<script>
+		const input = document.getElementById("todo-input");
+		const listContainer = document.getElementById("list-container");
+
+		const handleInputSubmit = (e) => {
+			e.preventDefault();
+			const todoValue = input.value.trim();
+			if (todoValue === "") return;
+
+			const listItem = document.createElement("div");
+			listItem.classList.add("list-item");
+			listItem.innerHTML = `
+                <button class="status-btn" data-status="pending">Done</button>
+                <p>${todoValue}</p>
+                <button class="delete-btn">Delete</button>
+            `;
+
+			listContainer.appendChild(listItem);
+			input.value = "";
+		};
+
+		listContainer.addEventListener("click", (e) => {
+			const target = e.target;
+
+			// Handle Status toggle
+			if (target.classList.contains("status-btn")) {
+				const todoText = target.nextElementSibling;
+				const isDone = target.getAttribute("data-status") === "done";
+
+				target.textContent = isDone ? "Done" : "Undo";
+				todoText.classList.toggle("strike", !isDone);
+				target.setAttribute("data-status", isDone ? "pending" : "done");
+			}
+
+			// Handle Delete
+			if (target.classList.contains("delete-btn")) {
+				target.parentElement.remove();
+			}
+		});
+
+		listContainer.addEventListener("dblclick", (e) => {
+			const target = e.target;
+
+			console.log("target", target.tagName);
+			if (target.tagName === "BUTTON") {
+				return;
+			}
+
+			target.focus();
+
+			target.contentEditable = true;
+			setTimeout(function () {
+				if (document.activeElement !== target) {
+					target.contentEditable = false;
+				}
+			}, 300);
+		});
+
+		// Adding event listener for button and Enter key
+		document
+			.getElementById("enter-button")
+			.addEventListener("click", handleInputSubmit);
+		input.addEventListener("keydown", (e) => {
+			if (e.key === "Enter") {
+				handleInputSubmit(e);
+			}
+		});
+	</script>
+</html>
