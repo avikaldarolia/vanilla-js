@@ -4,12 +4,22 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Star Rating</title>
+		<style>
+			.stars span {
+				font-size: 2rem;
+				color: gold;
+				cursor: pointer;
+				transition: color 0.2s;
+			}
+			.filled {
+				color: gold;
+			}
+			.stars span:hover,
+			.stars span.hovered {
+				color: darkgoldenrod;
+			}
+		</style>
 	</head>
-	<style>
-		.filled {
-			color: gold;
-		}
-	</style>
 	<body>
 		<h1>Select Rating:</h1>
 		<div id="stars" class="stars"></div>
