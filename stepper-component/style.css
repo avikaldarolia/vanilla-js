@@ -1,0 +1,55 @@
+body {
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 60vw;
+	padding: 40px 10px;
+}
+
+#heading {
+	padding: 10px;
+}
+
+.steps {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.line {
+	width: 30px;
+	height: 10px;
+}
+
+.lineActive {
+	background-color: lightblue;
+	width: 30px;
+	transition: width 0.5s ease-in-out;
+}
+
+.step {
+	background-color: lightblue;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	padding: 20px 25px;
+	border-radius: 100%;
+	border: 1px solid black;
+	cursor: pointer;
+}
+
+.step-container {
+	width: 300px;
+	height: 300px;
+	margin: 2rem;
+}
+
+.btn-container {
+	display: flex;
+	margin: 30px auto;
+	justify-content: space-around;
+	align-items: center;
+	width: 10rem;
+}
