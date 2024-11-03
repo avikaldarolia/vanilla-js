@@ -20,36 +20,63 @@ body {
 
 .line {
 	width: 30px;
-	height: 10px;
-}
-
-.lineActive {
-	background-color: lightblue;
-	width: 30px;
+	height: 5px;
+	background-color: #bdc3c7;
 	transition: width 0.5s ease-in-out;
 }
 
+.lineActive {
+	background-color: #3498db;
+	width: 30px;
+}
+
 .step {
-	background-color: lightblue;
-	display: flex;
-	text-align: center;
+	width: 30px;
+	height: 30px;
+	border: 2px solid #bdc3c7;
+	border-radius: 50%;
+	display: inline-flex;
 	justify-content: center;
-	padding: 20px 25px;
-	border-radius: 100%;
-	border: 1px solid black;
+	align-items: center;
 	cursor: pointer;
+	/* nice touch to add transition for bg-color and border color */
+	transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.step:hover {
+	border-color: #3498db;
+}
+
+.active {
+	background-color: #3498db;
+	color: white;
+	border-color: #3498db;
 }
 
 .step-container {
 	width: 300px;
 	height: 300px;
 	margin: 2rem;
+	border: 2px solid black;
 }
 
-.btn-container {
-	display: flex;
-	margin: 30px auto;
-	justify-content: space-around;
-	align-items: center;
-	width: 10rem;
+.btn-container button {
+	padding: 10px 20px;
+	font-size: 16px;
+	border: none;
+	border-radius: 5px;
+	background-color: #3498db;
+	color: #fff;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	margin: 0 5px;
+}
+
+.btn-container button:hover {
+	background-color: #1f77b4;
+}
+
+.btn-container button:disabled {
+	background-color: #bdc3c7;
+	cursor: not-allowed;
 }

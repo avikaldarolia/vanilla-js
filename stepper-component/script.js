@@ -39,6 +39,10 @@ const handleStepChange = (prev, next, container) => {
 	next.disabled = activeIndex === STEPS_COUNT - 1;
 	container.style.backgroundColor = colors[activeIndex];
 
+	document.querySelectorAll(".step").forEach((step, index) => {
+		step.classList.toggle("active", index === activeIndex);
+	});
+
 	const lines = document.querySelectorAll(".line");
 	lines.forEach((line) => {
 		const id = line.getAttribute("line-id");
